@@ -1,6 +1,8 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
+const isDev = process.env.NODE_ENV === 'development'
+
 const config = {
   entry: {
     app: path.join(__dirname, '../client/index.js')
@@ -25,14 +27,26 @@ const config = {
       filename: 'index.html',
       title: 'my webpack demo'
     })
-  ],
-  devServer: {
+  ]
+}
+
+if(isDev) {
+  console.log('====== develop mode ======')
+  config.devServer = {
     host: '0.0.0.0',
-    port: '8000',
+    port: '8888',
     contentBase: path.join(__dirname, "dist"),
-    // publicPath: '/public',
+    publicPath: '/public',
     overlay: {
       errors: true
+    },
+    // historyApiFallback: {
+    //   index: '/public/index.html'
+    // },
+    historyApiFallback: {
+      rewrites: [
+        { from: /^\/$/, to: '/public/index.html' } 
+      ]
     }
   }
 }
