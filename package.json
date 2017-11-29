@@ -8,7 +8,7 @@
     "build:server": "webpack --config build/webpack.config.server.js",
     "clear": "rimraf dist",
     "build": "npm run clear && npm run build:client && npm run build:server",
-    "start:client": "nodemon server/server.js",
+    "start:server": "npm run build && nodemon server/server.js",
     "dev:client": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js"
   },
   "author": "835702580@qq.com",
