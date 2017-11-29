@@ -7,8 +7,8 @@ const config = {
   },
   output: {
     filename: '[name].[hash].js',
-    path: path.join(__dirname, '../dist')
-    // publicPath: '/public'
+    path: path.join(__dirname, '../dist'),
+    publicPath: '/public'
   },
   module: {
     rules: [
@@ -22,6 +22,7 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, '../index.html'),
+      filename: 'index.html',
       title: 'my webpack demo'
     })
   ]
