@@ -1,0 +1,10 @@
+{
+  "name": "webpack-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+  },
+  "author": "835702580@qq.com",
+  "license": "ISC"
+}
