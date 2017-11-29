@@ -25,7 +25,16 @@ const config = {
       filename: 'index.html',
       title: 'my webpack demo'
     })
-  ]
+  ],
+  devServer: {
+    host: '0.0.0.0',
+    port: '8000',
+    contentBase: path.join(__dirname, "dist"),
+    // publicPath: '/public',
+    overlay: {
+      errors: true
+    }
+  }
 }
 
 module.exports = config
