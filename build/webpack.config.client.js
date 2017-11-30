@@ -28,6 +28,7 @@ const config = {
       filename: 'index.html',
       title: 'my webpack demo'
     })
+    // new webpack.NamedModulesPlugin()
   ]
 }
 
@@ -58,6 +59,7 @@ if(isDev) {
     }
   }
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
+  // https://webpack.js.org/guides/hot-module-replacement/#enabling-hmr
 }
 
 module.exports = config
