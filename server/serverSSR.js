@@ -37,14 +37,11 @@ serverComplier.watch({}, (err, stats) => {
     serverConfig.output.path,
     serverConfig.output.filename
   )
-  // console.log('路径:', serverEntryPath)
   const serverBundle = mfs.readFileSync(serverEntryPath, 'utf-8')
-  // console.log("Bundle:", serverBundle)
   const m = new Module()
-  m._compile(serverBundle, 'server-entry.js')
+  m._compile(serverBundle, 'test.js')
   // 这里已经取到了服务端渲染的APP
-  ssrBundle = m.default
-  console.log(ssrBundle,'ssrBundle')
+  ssrBundle = m.exports.default
 })
 
 
@@ -55,12 +52,9 @@ module.exports = (app) => {
   app.get('*', (req, res) => {
     getTemplate()
       .then( template => {
-        // console.log('template: ', template)
         const HtmlTemplate = template
-        // console.log(123, ssrBundle)
         const renderString = ReactSSR.renderToString(ssrBundle)
-        // console.log(123, renderString)
-        // console.warn(HtmlTemplate.replace('<!-- ssr -->', renderString))
+        console.warn(HtmlTemplate.replace('<!-- ssr -->', renderString))
         res.send(HtmlTemplate.replace('<!-- ssr -->', renderString))
       })
   })
