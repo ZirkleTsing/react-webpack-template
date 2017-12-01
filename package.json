@@ -11,8 +11,8 @@
     "start:server": "npm run build && nodemon server/server.js",
     "dev:client": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",
     "dev:server": "cross-env NODE_ENV=development && nodemon server/server.js",
-    "lint": "eslint --ext .js --ext .jsx client/*",
-    "precommmit": "npm run lint"
+    "lint": "eslint --ext .js --ext .jsx client/**",
+    "precommit": "npm run lint"
   },
   "author": "835702580@qq.com",
   "license": "ISC",
