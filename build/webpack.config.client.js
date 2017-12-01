@@ -1,36 +1,18 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
+const merge = require('webpack-merge')
+const baseConfig = require('./webpack.config.base')
 
 const isDev = process.env.NODE_ENV === 'development'
 
-const config = {
+const config = merge(baseConfig, {
   entry: {
     app: path.join(__dirname, '../client/index.js')
   },
   output: {
     filename: '[name].[hash].js',
-    path: path.join(__dirname, '../dist'),
     publicPath: '/public/'
-  },
-  module: {
-    rules: [
-      {
-        enforce: "pre",
-        test: /.(js|jsx)$/,
-        exclude: [
-          path.join(__dirname, '../node_modules'),
-        ],
-        loader: "eslint-loader",
-      },
-      {
-        test: /.js$/,
-        loader: 'babel-loader',
-        exclude: [
-          path.join(__dirname, '../node_modules')
-        ]
-      }
-    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -40,7 +22,7 @@ const config = {
     })
     // new webpack.NamedModulesPlugin()
   ]
-}
+})
 
 if(isDev) {
   console.log('====== develop mode ======')
@@ -54,14 +36,11 @@ if(isDev) {
     host: '0.0.0.0',
     port: '8888',
     contentBase: path.join(__dirname, "dist"),
-    publicPath: '/public/ ',
+    publicPath: '/public/',
     overlay: {
       errors: true
     },
     hot: true,
-    // historyApiFallback: {
-    //   index: '/public/index.html'
-    // },
     historyApiFallback: {
       rewrites: [
         { from: /^\/$/, to: '/public/index.html' }
