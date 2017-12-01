@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+let demo
 
 export default class App extends Component {
   render() {
