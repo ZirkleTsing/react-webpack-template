@@ -16,9 +16,19 @@ const config = {
   module: {
     rules: [
       {
+        enforce: "pre",
+        test: /.(js|jsx)$/,
+        exclude: [
+          path.join(__dirname, '../node_modules'),
+        ],
+        loader: "eslint-loader",
+      },
+      {
         test: /.js$/,
         loader: 'babel-loader',
-        exclude: [path.join(__dirname, '../node_modules')]
+        exclude: [
+          path.join(__dirname, '../node_modules')
+        ]
       }
     ]
   },
@@ -44,7 +54,7 @@ if(isDev) {
     host: '0.0.0.0',
     port: '8888',
     contentBase: path.join(__dirname, "dist"),
-    publicPath: '/public',  
+    publicPath: '/public/ ',
     overlay: {
       errors: true
     },
@@ -54,7 +64,7 @@ if(isDev) {
     // },
     historyApiFallback: {
       rewrites: [
-        { from: /^\/$/, to: '/public/index.html' } 
+        { from: /^\/$/, to: '/public/index.html' }
       ]
     }
   }
