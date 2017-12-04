@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import Router from './router/router'
 
 export default class App extends Component {
   componentDidMount() {
@@ -7,7 +9,12 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>this is app lint test</div>
+      <section>
+        <Link to="/user" key="link-user">user</Link>
+        <br key="br" />
+        <Link to="/dashboard" key="link-dash">dashboard</Link>
+        <Router />
+      </section>
     )
   }
 }
