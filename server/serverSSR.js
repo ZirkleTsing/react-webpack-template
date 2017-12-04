@@ -24,6 +24,8 @@ const serverComplier = webpack(serverConfig)
 // hack写法
 const Module = module.constructor
 let ssrBundle = null
+let app = null
+let ssrdefault = null
 
 serverComplier.outputFileSystem = mfs
 serverComplier.watch({}, (err, stats) => {
@@ -41,7 +43,7 @@ serverComplier.watch({}, (err, stats) => {
   const m = new Module()
   m._compile(serverBundle, 'test.js')
   // 这里已经取到了服务端渲染的APP
-  ssrBundle = m.exports.default
+  ssrBundle = m.exports.ServerSideRender
 })
 
 
@@ -50,11 +52,13 @@ module.exports = (app) => {
     target: 'http://localhost:8888/'
   }))
   app.get('*', (req, res) => {
+    const path = req.path
+    const serverContext = {}
     getTemplate()
       .then( template => {
         const HtmlTemplate = template
-        const renderString = ReactSSR.renderToString(ssrBundle)
-        console.warn(HtmlTemplate.replace('<!-- ssr -->', renderString))
+        const ssrApp = ssrBundle(path, serverContext)
+        const renderString = ReactSSR.renderToString(ssrApp)
         res.send(HtmlTemplate.replace('<!-- ssr -->', renderString))
       })
   })

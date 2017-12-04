@@ -9,7 +9,7 @@ const app = express()
 const isDev = process.env.NODE_ENV === 'production'
 
 
-if(!isDev) {
+if(isDev) {
   app.use( '/public', express.static(path.join(__dirname, '../dist')))
 
   app.get('*', (req, res) => {
