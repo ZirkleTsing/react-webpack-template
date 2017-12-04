@@ -2,12 +2,14 @@ const express = require('express')
 const ReactSSR = require('react-dom/server')
 const fs = require('fs')
 const path = require('path')
+const favicon = require('serve-favicon')
 const serverSsrRender = require('./serverSSR')
 
 const app = express()
 
 const isDev = process.env.NODE_ENV === 'production'
 
+app.use(favicon(path.join(path.join(__dirname, '../favicon.ico'))))
 
 if(isDev) {
   app.use( '/public', express.static(path.join(__dirname, '../dist')))

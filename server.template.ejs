@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <div id="root">
+      <%%- content %>
+    </div>
+    <script>
+      window.__INITIAL_STATE__ = <%%- initialState%>
+    </script>
+  </body>
+</html>

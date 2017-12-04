@@ -5,6 +5,7 @@ const path = require('path')
 const webpack = require('webpack')
 const ReactSSR = require('react-dom/server')
 const proxy = require('http-proxy-middleware')
+const ejs = require('ejs')
 
 
 // 1.从client服务端内存中取出index.html
@@ -14,7 +15,7 @@ const proxy = require('http-proxy-middleware')
 
 
 const getTemplate = () => new Promise((resolve, reject) => {
-  axios.get('http://localhost:8888/public/index.html')
+  axios.get('http://localhost:8888/public/index.server.html')
     .then((res) => {
       resolve(res.data)
     })
@@ -24,8 +25,6 @@ const serverComplier = webpack(serverConfig)
 // hack写法
 const Module = module.constructor
 let ssrBundle = null
-let app = null
-let ssrdefault = null
 
 serverComplier.outputFileSystem = mfs
 serverComplier.watch({}, (err, stats) => {
@@ -59,7 +58,22 @@ module.exports = (app) => {
         const HtmlTemplate = template
         const ssrApp = ssrBundle(path, serverContext)
         const renderString = ReactSSR.renderToString(ssrApp)
-        res.send(HtmlTemplate.replace('<!-- ssr -->', renderString))
+        if (serverContext.url) {
+          res.writeHead(301, {
+            Location: serverContext.url
+          })
+          res.end()
+        } else {
+          console.log(template)
+          // <%- Outputs the unescaped value into the
+          // <%% Outputs a literal '<%'
+          // %%> Outputs a literal '%>'
+          const html = ejs.render(template, {
+            content: renderString,
+            initialState: "{a: 1}"
+          })
+          res.send(html)
+        }
       })
   })
 }

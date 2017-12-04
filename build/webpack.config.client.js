@@ -13,15 +13,7 @@ const config = merge(baseConfig, {
   output: {
     filename: '[name].[hash].js',
     publicPath: '/public/'
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, '../index.html'),
-      filename: 'index.html',
-      title: 'my webpack demo'
-    })
-    // new webpack.NamedModulesPlugin()
-  ]
+  }
 })
 
 if(isDev) {

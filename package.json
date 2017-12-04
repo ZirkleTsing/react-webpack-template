@@ -49,10 +49,13 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "ejs": "^2.5.7",
+    "ejs-compiled-loader": "^1.1.0",
     "express": "^4.16.2",
     "http-proxy-middleware": "^0.17.4",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-router-dom": "^4.2.2"
+    "react-router-dom": "^4.2.2",
+    "serve-favicon": "^2.4.5"
   }
 }
