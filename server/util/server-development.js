@@ -1,20 +1,17 @@
 const axios = require('axios')
-const serverConfig = require('../build/webpack.config.server')
 const MemoryFS = require("memory-fs")
 const path = require('path')
 const webpack = require('webpack')
-const ReactSSR = require('react-dom/server')
 const proxy = require('http-proxy-middleware')
 const ejs = require('ejs')
 const serialize = require('serialize-javascript')
+const serverConfig = require('../../build/webpack.config.server')
+const serverRender = require('../util/server-render').serverRender
 
-const createStore = require('redux').createStore
-const reducer = require('../client/store/redux').reducer
 // 1.从client服务端内存中取出index.html
 // 2.利用webpack()编译出SSR
 // 3.转化成字符串
 // 4.拼接;send
-
 
 const getTemplate = () => new Promise((resolve, reject) => {
   axios.get('http://localhost:8888/public/index.server.html')
@@ -22,6 +19,7 @@ const getTemplate = () => new Promise((resolve, reject) => {
       resolve(res.data)
     })
 })
+
 const mfs = new MemoryFS()
 const serverComplier = webpack(serverConfig)
 // hack写法
@@ -53,33 +51,9 @@ module.exports = (app) => {
     target: 'http://localhost:8888/'
   }))
   app.get('*', (req, res) => {
-    const path = req.path
-    const serverContext = {}
-    const store = createStore(reducer)
     getTemplate()
       .then( template => {
-        const HtmlTemplate = template
-        const ssrApp = ssrBundle(path, serverContext, store)
-        // 这里进行异步state操作
-        // TODO
-        const renderString = ReactSSR.renderToString(ssrApp)
-        if (serverContext.url) {
-          res.writeHead(301, {
-            Location: serverContext.url
-          })
-          res.end()
-          return
-        } else {
-          // console.log(template)
-          // <%- Outputs the unescaped value into the
-          // <%% Outputs a literal '<%'
-          // %%> Outputs a literal '%>'
-          const html = ejs.render(template, {
-            content: renderString,
-            initialState: serialize(store.getState())
-          })
-          res.send(html)
-        }
+        serverRender(ssrBundle, template, req, res)
       })
   })
 }

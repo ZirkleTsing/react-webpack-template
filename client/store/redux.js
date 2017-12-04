@@ -7,7 +7,7 @@ const initialState = {
 function reducer(state = initialState, action) {
   switch (action.type) {
     case ADD: {
-      return { ...state, count: this.state.count + 1 }
+      return { ...state, count: state.count + 1 }
     }
     default: {
       return state

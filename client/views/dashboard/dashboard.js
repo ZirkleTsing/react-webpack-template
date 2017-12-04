@@ -1,13 +1,22 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
-export default class Dashboard extends React.Component {
+/* eslint-disable */
+class Dashboard extends React.Component {
   componentDidMount() {
     // some
+    console.log(this.props)
   }
 
   render() {
     return (
-      <div>dashboard view</div>
+      <div>dashboard view {this.props.count}</div>
     )
   }
 }
+
+export default connect(
+  state => state,
+  null,
+)(Dashboard)
+/* eslint-enable */

@@ -3,7 +3,8 @@ const ReactSSR = require('react-dom/server')
 const fs = require('fs')
 const path = require('path')
 const favicon = require('serve-favicon')
-const serverSsrRender = require('./serverSSR')
+const serverDevRender = require('./util/server-development')
+const serverRender = require('./util/server-render').serverRender
 
 const app = express()
 
@@ -15,14 +16,12 @@ if(isDev) {
   app.use( '/public', express.static(path.join(__dirname, '../dist')))
 
   app.get('*', (req, res) => {
-    const serverEntry = require('../dist/server-entry').default
-    const renderString = ReactSSR.renderToString(serverEntry)
-    let template = fs.readFileSync(path.join(__dirname, '../dist/index.html'), 'utf-8')
-    template = template.replace('<!-- ssr -->', renderString)
-    res.send(template)
+    const serverEntry = require('../dist/server-entry').ServerSideRender
+    let template = fs.readFileSync(path.join(__dirname, '../dist/index.server.html'), 'utf-8')
+    serverRender(serverEntry, template, req, res)
   })
 } else {
-  serverSsrRender(app)
+  serverDevRender(app)
 }
 
 
