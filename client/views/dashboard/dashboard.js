@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
 
 /* eslint-disable */
 class Dashboard extends React.Component {
@@ -10,7 +11,14 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <div>dashboard view {this.props.count}</div>
+      <section>
+        <Helmet>
+          <title>Dashboard</title>
+          <meta name="description" content="Nested component" />
+          <link rel="canonical" href="http://mysite.com/example" />
+        </Helmet>
+        <div>dashboard view {this.props.count}</div>
+      </section>
     )
   }
 }

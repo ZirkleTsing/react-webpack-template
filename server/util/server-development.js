@@ -3,8 +3,6 @@ const MemoryFS = require("memory-fs")
 const path = require('path')
 const webpack = require('webpack')
 const proxy = require('http-proxy-middleware')
-const ejs = require('ejs')
-const serialize = require('serialize-javascript')
 const serverConfig = require('../../build/webpack.config.server')
 const serverRender = require('../util/server-render').serverRender
 

@@ -33,8 +33,7 @@ const config = {
     // https://github.com/jantimon/html-webpack-plugin/blob/master/docs/template-option.md 2) Setting a loader directly for the template
     new HtmlWebpackPlugin({
       template: '!!ejs-compiled-loader!' + path.join(__dirname, '../server.template.ejs'),
-      filename: 'index.server.html',
-      title: 'my SSR'
+      filename: 'index.server.html'
     })
   ]
 }
