@@ -49,6 +49,10 @@ module.exports = (app) => {
     target: 'http://localhost:8888/'
   }))
   app.get('*', (req, res) => {
+    if (!ssrBundle) {
+      res.send('the bundle is not avaliable now, please wait a moment and refresh the browser')
+      return
+    }
     getTemplate()
       .then( template => {
         serverRender(ssrBundle, template, req, res)
