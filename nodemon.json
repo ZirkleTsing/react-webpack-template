@@ -1,0 +1,15 @@
+{
+  "restartable": "rs",
+  "verbose": true,
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": "js jsx",
+  "ignore": [
+    "node_modules/**/node_module/*",
+    "client",
+    "build",
+    ".eslintrc",
+    ".git"
+  ]
+}

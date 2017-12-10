@@ -10,10 +10,10 @@ function serverRender(bundle, template, req, res) {
   const serverContext = {}
   const headTags = [] // usage: https://github.com/tizmagik/react-head
   const store = createStore(reducer)
-  console.log('store:', store.getState())
+  // console.log('store:', store.getState())
   const HtmlTemplate = template // template
   store.dispatch(add())
-  console.log('after dispatch:', store.getState())
+  // console.log('after dispatch:', store.getState())
   const ssrApp = bundle(path, serverContext, store, headTags)
   // 这里进行异步state操作
   // TODO

@@ -8,11 +8,11 @@ const serverRender = require('./util/server-render').serverRender
 
 const app = express()
 
-const isDev = process.env.NODE_ENV === 'production'
+const isDev = process.env.NODE_ENV === 'development'
 
 app.use(favicon(path.join(path.join(__dirname, '../favicon.ico'))))
 
-if(isDev) {
+if(!isDev) {
   app.use( '/public', express.static(path.join(__dirname, '../dist')))
 
   app.get('*', (req, res) => {
