@@ -11,7 +11,7 @@
     "build": "npm run clear && npm run build:client && npm run build:server",
     "start:server": "npm run build && nodemon server/server.js",
     "dev:client": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",
-    "dev:server": "cross-env NODE_ENV=development && nodemon server/server.js",
+    "dev:server": "nodemon server/server.js",
     "lint": "eslint --ext .js --ext .jsx client/**",
     "precommit": "npm run lint"
   },
@@ -53,7 +53,7 @@
     "ejs-compiled-loader": "1.1.0",
     "express": "4.16.2",
     "http-proxy-middleware": "0.17.4",
-    "npm": "^5.6.0",
+    "npm": "5.6.0",
     "react": "16.2.0",
     "react-dom": "16.2.0",
     "react-head": "1.2.0",
