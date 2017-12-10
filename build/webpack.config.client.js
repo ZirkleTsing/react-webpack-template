@@ -11,9 +11,20 @@ const config = merge(baseConfig, {
     app: path.join(__dirname, '../client/index.js')
   },
   output: {
-    filename: '[name].[hash].js',
-    publicPath: '/public/'
-  }
+    filename: '[name].[hash].js'
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, '../template.html'),
+      filename: 'index.html',
+      title: 'my webpack demo'
+    }),
+    // https://github.com/jantimon/html-webpack-plugin/blob/master/docs/template-option.md 2) Setting a loader directly for the template
+    new HtmlWebpackPlugin({
+      template: '!!ejs-compiled-loader!' + path.join(__dirname, '../server.template.ejs'),
+      filename: 'index.server.html'
+    })
+  ]
 })
 
 if(isDev) {
@@ -26,17 +37,22 @@ if(isDev) {
   }
   config.devServer = {
     host: '0.0.0.0',
+    // compress: true,  // wtf
     port: '8888',
-    contentBase: path.join(__dirname, "dist"),
+    contentBase: path.join(__dirname, "../dist"),
     publicPath: '/public/',
     overlay: {
       errors: true
     },
     hot: true,
     historyApiFallback: {
-      rewrites: [
-        { from: /^\/$/, to: '/public/index.html' }
-      ]
+      // rewrites: [
+      //   { from: /^\/$/, to: '/public/index.html' }
+      // ]
+      index: '/public/index.html'
+    },
+    proxy: {
+      '/api': 'http://localhost:3333'
     }
   }
   config.plugins.push(new webpack.HotModuleReplacementPlugin())

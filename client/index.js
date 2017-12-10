@@ -29,7 +29,8 @@ render(App)
 
 if (module.hot) {
   module.hot.accept('./App.js', () => {
-    const NextApp = require('./App.js') // eslint-disable-line
+    // console.log('hot loader refresh') // eslint-disable-line
+    const NextApp = require('./App.js').default // eslint-disable-line
     render(NextApp)
   })
 }

@@ -1,9 +1,12 @@
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const config = {
   output: {
     path: path.join(__dirname, '../dist/'),
+    publicPath: '/public/'
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
   },
   module: {
     rules: [
@@ -23,19 +26,7 @@ const config = {
         ]
       }
     ]
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, '../template.html'),
-      filename: 'index.html',
-      title: 'my webpack demo'
-    }),
-    // https://github.com/jantimon/html-webpack-plugin/blob/master/docs/template-option.md 2) Setting a loader directly for the template
-    new HtmlWebpackPlugin({
-      template: '!!ejs-compiled-loader!' + path.join(__dirname, '../server.template.ejs'),
-      filename: 'index.server.html'
-    })
-  ]
+  }
 }
 
 module.exports = config
