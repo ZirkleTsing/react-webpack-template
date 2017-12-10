@@ -1,5 +1,5 @@
 import React from 'react'
-import { Helmet } from 'react-helmet'
+import HeadTag from 'react-head'
 
 export default class User extends React.Component {
   componentDidMount() {
@@ -10,9 +10,8 @@ export default class User extends React.Component {
     return (
       <div>
         <div>
-          <Helmet>
-            <title>User</title>
-          </Helmet>
+          <HeadTag tag="title">User</HeadTag>
+          <HeadTag tag="meta" name="example" content="whatever" />
         </div>
         user view
       </div>
