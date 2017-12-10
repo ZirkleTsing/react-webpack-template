@@ -14,7 +14,7 @@ class Dashboard extends React.Component {
       <section>
         <HeadTag tag="title">Dashboard</HeadTag>
         <HeadTag tag="meta" name="example" content="whatever" />
-        <div>dashboard view {this.props.count}</div>
+        <div>dashboard view{this.props.count}</div>
       </section>
     )
   }
